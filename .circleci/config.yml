@@ -2,8 +2,8 @@ version: 2.1
 
 jobs:
   build:
-    docker:
-      - image: cimg/openjdk:17.0
+    machine: true
+    resource_class: your-namespace/your-runner   # 👈 IMPORTANT
     steps:
       - checkout
       - run:
@@ -16,8 +16,8 @@ jobs:
             - target/*.jar
 
   deploy:
-    docker:
-      - image: cimg/base:stable
+    machine: true
+    resource_class: your-namespace/your-runner   # 👈 IMPORTANT
     steps:
       - attach_workspace:
           at: .
@@ -26,7 +26,6 @@ jobs:
           name: Deploy app
           command: |
             echo "Deploying app..."
-            # Replace below with your server
             scp target/*.jar ubuntu@YOUR_IP:/home/ubuntu/app/app.jar
 
 workflows:
