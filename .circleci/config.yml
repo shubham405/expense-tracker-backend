@@ -3,7 +3,7 @@ version: 2.1
 jobs:
   build:
     machine: true
-    resource_class: shubham405/local-runner  # 👈 IMPORTANT
+    resource_class: shubham405/local-runner
     steps:
       - checkout
       - run:
@@ -17,16 +17,23 @@ jobs:
 
   deploy:
     machine: true
-    resource_class:  shubham405/local-runner # 👈 IMPORTANT
+    resource_class: shubham405/local-runner
     steps:
       - attach_workspace:
           at: .
 
       - run:
-          name: Deploy app
+          name: Deploy locally
           command: |
-            echo "Deploying app..."
-            scp target/*.jar ubuntu@YOUR_IP:/home/ubuntu/app/app.jar
+            echo "Deploying locally..."
+            mkdir -p /home/$USER/app
+            cp target/*.jar /home/$USER/app/app.jar
+
+      - run:
+          name: Run app
+          command: |
+            pkill -f 'java -jar' || true
+            nohup java -jar /home/$USER/app/app.jar > app.log 2>&1 &
 
 workflows:
   build_and_deploy:
