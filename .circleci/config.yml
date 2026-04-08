@@ -10,10 +10,15 @@ jobs:
       - run:
           name: Debug environment
           command: |
+            echo "User:"
             whoami
+            echo "PWD:"
             pwd
+            echo "Java:"
             java -version
+            echo "Maven:"
             mvn -version
+            echo "Files:"
             ls -l
 
       - run:
@@ -40,14 +45,12 @@ jobs:
           name: Deploy locally
           command: |
             echo "Deploying locally..."
-            mkdir -p /home/$USER/app
-            cp target/*.jar /home/$USER/app/app.jar
+            mkdir -p /home/circleci/app
+            cp target/*.jar /home/circleci/app/app.jar
 
       - run:
-          name: Run app
-          command: |
-            pkill -f 'java -jar' || true
-            nohup java -jar /home/$USER/app/app.jar > app.log 2>&1 &
+          name: Deploy success
+          command: echo "App built and deployed locally"
 
 workflows:
   build_and_deploy:
