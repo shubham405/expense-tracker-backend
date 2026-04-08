@@ -17,7 +17,7 @@ jobs:
 
   deploy:
     machine: true
-    resource_class: your-namespace/your-runner   # 👈 IMPORTANT
+    resource_class:  shubham405/local-runner # 👈 IMPORTANT
     steps:
       - attach_workspace:
           at: .
