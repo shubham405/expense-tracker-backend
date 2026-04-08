@@ -10,15 +10,10 @@ jobs:
       - run:
           name: Debug environment
           command: |
-            echo "User:"
             whoami
-            echo "PWD:"
             pwd
-            echo "Java:"
             java -version
-            echo "Maven:"
             mvn -version
-            echo "Files:"
             ls -l
 
       - run:
