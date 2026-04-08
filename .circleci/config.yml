@@ -6,6 +6,25 @@ jobs:
     resource_class: shubham405/local-runner
     steps:
       - checkout
+
+      - run:
+          name: Debug environment
+          command: |
+            echo "User:"
+            whoami
+            echo "PWD:"
+            pwd
+            echo "Java:"
+            java -version
+            echo "Maven:"
+            mvn -version
+            echo "Files:"
+            ls -l
+
+      - run:
+          name: Fix mvnw permission
+          command: chmod +x mvnw
+
       - run:
           name: Build app
           command: ./mvnw clean package -DskipTests
